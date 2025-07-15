@@ -277,9 +277,17 @@
     }
 
     document.addEventListener("keydown", e => {
-      if ((e.key === " " || e.code === "Space") && gameActive) jump();
-      if (!gameActive && (e.key === "r" || e.key === "R")) resetGame();
+      const isTyping = document.activeElement === document.getElementById("input-field");
+    
+      if (!isTyping && (e.key === " " || e.code === "Space") && gameActive) {
+        jump();
+      }
+    
+      if (!isTyping && !gameActive && (e.key === "r" || e.key === "R")) {
+        resetGame();
+      }
     });
+
 
     canvas.addEventListener("touchstart", function (e) {
       if (gameActive) jump();
