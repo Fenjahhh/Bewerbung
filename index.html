@@ -60,7 +60,6 @@
       opacity: 1;
     }
 
-    /* Chatbot Stil */
     .chatbot-container {
       width: 600px;
       background: #fefefe;
@@ -118,7 +117,6 @@
   <div id="message">🎉 Geschafft! Du kannst jetzt meinen Lebenslauf laden & mit mir chatten.</div>
   <button id="cv-btn" disabled>📄 Lebenslauf Downloaden</button>
 
-  <!-- CHATBOT -->
   <div class="chatbot-container" id="chatbot-container">
     <div id="conversation">
       <div class="chatbot-message">Hi! Ich bin Fenja. Was möchtest du über mich wissen?</div>
@@ -130,7 +128,6 @@
   </div>
 
   <script>
-    // GAME-Logik
     const canvas = document.getElementById("game-canvas");
     const ctx = canvas.getContext("2d");
     const scoreElem = document.getElementById("score");
@@ -177,7 +174,7 @@
       ctx.fillStyle = "#aaa";
       ctx.fillRect(frame ? 33 : 10, 22, 5, 14); // Arm
       ctx.fillStyle = "#111";
-      if (frame === 2) ctx.fillRect(20, 41, 8, 16); // springen
+      if (frame === 2) ctx.fillRect(20, 41, 8, 16);
       else {
         ctx.fillRect(18, 41, 5, frame ? 11 : 16);
         ctx.fillRect(25, 41, 5, frame ? 16 : 11);
@@ -235,7 +232,6 @@
 
       drawGirl(girl.x, girl.y, girl.jumping ? 2 : girl.animFrame);
 
-      // Punkte
       if (
         cactusList.length &&
         cactusList[0].x + cactusList[0].width < girl.x &&
@@ -260,26 +256,42 @@
 
     function gameOver() {
       gameActive = false;
-      scoreElem.textContent = "GAME OVER! Score: " + score;
+      scoreElem.textContent = "GAME OVER! Score: " + score + " – [R] Neustart";
+    }
+
+    function resetGame() {
+      cactusList = [];
+      cactusCooldown = 0;
+      score = 0;
+      scoreElem.textContent = "Score: 0";
+      girl.y = groundY;
+      girl.vy = 0;
+      girl.jumping = false;
+      girl.animFrame = 0;
+      girl.animTimer = 0;
+      gameActive = true;
+      msg.style.display = "none";
+      cvBtn.disabled = true;
+      chatbotContainer.style.display = "none";
+      loop();
     }
 
     document.addEventListener("keydown", e => {
       if ((e.key === " " || e.code === "Space") && gameActive) jump();
+      if (!gameActive && (e.key === "r" || e.key === "R")) resetGame();
     });
 
     canvas.addEventListener("touchstart", function (e) {
       if (gameActive) jump();
       e.preventDefault();
-    });
+    }, { passive: false });
 
-    loop();
-
-    // CV Download
+    // CV Button
     cvBtn.addEventListener("click", () => {
       window.open("z_CV_Fenja_Thomas.pdf", "_blank");
     });
 
-    // CHATBOT-LOGIK
+    // CHATBOT-Logik
     const form = document.getElementById("input-form");
     const inputField = document.getElementById("input-field");
     const conversation = document.getElementById("conversation");
@@ -299,7 +311,7 @@
       conversation.appendChild(userMsg);
       inputField.value = "";
 
-      const flowId = "61965f95-18d2-46b9-a0d2-363864516a49"; // dein Flowise ID
+      const flowId = "61965f95-18d2-46b9-a0d2-363864516a49";
       try {
         const res = await fetch(`https://cloud.flowiseai.com/api/v1/prediction/${flowId}`, {
           method: "POST",
@@ -319,7 +331,9 @@
         conversation.appendChild(errMsg);
       }
     }
+
+    // Start
+    resetGame();
   </script>
 </body>
 </html>
-
