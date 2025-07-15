@@ -209,7 +209,7 @@
       drawGround();
 
       cactusList.forEach(cac => {
-        cac.x -= 3 + Math.floor(score / 4);
+        cac.x -= 5 + Math.floor(score / 4);
         drawCactus(cac.x, cac.height, cac.width);
         if (
           girl.x + girl.w > cac.x &&
@@ -229,7 +229,7 @@
       }
 
       if (girl.jumping) {
-        girl.vy += 1.1;
+        girl.vy += 0.9;
         girl.y += girl.vy;
         if (girl.y >= groundY) {
           girl.y = groundY;
