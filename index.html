@@ -53,7 +53,8 @@
       border-radius: 8px;
       margin-bottom: 20px;
       cursor: pointer;
-      opacity: 0.5;
+      opacity: 0.3;
+      transition: opacity 0.3s;
     }
 
     #cv-btn:enabled {
@@ -65,6 +66,7 @@
       background: #fefefe;
       border: 3px solid #000;
       padding: 12px;
+      margin-top: 40px; 
       margin-bottom: 40px;
       display: none;
     }
@@ -106,6 +108,12 @@
       color: #fff;
       border: none;
     }
+    .user-message {
+      background: #ccc;
+      text-align: right;
+      border: 1px dashed #000; 
+    }
+
   </style>
 </head>
 <body>
@@ -117,7 +125,11 @@
   <div id="message">🎉 Geschafft! Du kannst jetzt meinen Lebenslauf laden & mit mir chatten.</div>
   <button id="cv-btn" disabled>📄 Lebenslauf Downloaden</button>
 
+  <!-- CHATBOT -->
   <div class="chatbot-container" id="chatbot-container">
+    <div style="background:#000; color:#fff; text-align:center; padding:10px; font-weight:bold; font-family: monospace;">
+      Fenja(Bot)
+    </div>
     <div id="conversation">
       <div class="chatbot-message">Hi! Ich bin Fenja. Was möchtest du über mich wissen?</div>
     </div>
@@ -126,6 +138,7 @@
       <button id="submit-button" type="submit">Senden</button>
     </form>
   </div>
+
 
   <script>
     const canvas = document.getElementById("game-canvas");
